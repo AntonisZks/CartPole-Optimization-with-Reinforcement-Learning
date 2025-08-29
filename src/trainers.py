@@ -19,7 +19,7 @@ class Trainer():
                 next_observation, reward, terminated, truncated, info = self.env.step(action)
                 done = terminated or truncated
 
-                self.memory_buffer.add(observation, action, reward, next_observation, float(done))
+                self.agent.memory_buffer.add(observation, action, reward, next_observation, float(done))
 
                 observation = next_observation
                 episode_score += reward

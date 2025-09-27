@@ -1,31 +1,32 @@
+from replay_buffers import ReplayBufferMemory
 import torch as T
 import torch.nn as nn
 import numpy as np
 
-from .networks import DeepQNetwork_CartPole
-from .replay_buffer import ReplayBufferMemory
-
 
 class Agent():
-    def __init__(self, gamma, epsilon, lr, input_dims, n_actions, device):
+    def __init__(
+            self, gamma, epsilon, epsilon_min, epsilon_decay, lr, input_dims, n_actions, taget_update_freq, 
+            memory_size, batch_size, network, device
+        ):
         self.gamma = gamma
 
         self.epsilon = epsilon
-        self.epsilon_min = 0.01
-        self.epsilon_decay = 0.995
+        self.epsilon_min = epsilon_min
+        self.epsilon_decay = epsilon_decay
 
         self.input_dims = input_dims
         self.n_actions = n_actions
         self.device = device
 
         self.action_space = [i for i in range(n_actions)]
-        self.batch_size = 64
-        self.target_update_freq = 10
-        self.memory_size = 10000
+        self.batch_size = batch_size
+        self.target_update_freq = taget_update_freq
+        self.memory_size = memory_size
 
         # Initialize the Deep Q-Networks and send to device
-        self.policy_network = DeepQNetwork_CartPole(input_dims, n_actions).to(self.device)
-        self.target_network = DeepQNetwork_CartPole(input_dims, n_actions).to(self.device)
+        self.policy_network = network(input_dims, n_actions).to(self.device)
+        self.target_network = network(input_dims, n_actions).to(self.device)
         self.target_network.load_state_dict(self.policy_network.state_dict())
         self.target_network.eval()
 
@@ -46,10 +47,10 @@ class Agent():
             return best_action
 
     def optimize(self):
-        if len(self.memory_buffer) < self.batch_size:
+        if len(self.memory_buffer) <= self.batch_size:
             return
 
-        # Sample batch from replay buffer - assume tensors on device already
+        # Sample batch from replay buffer. Batch tensors are already on the appropriate device via ReplayBufferMemory.sample
         state_batch, action_batch, reward_batch, next_state_batch, done_batch = self.memory_buffer.sample(self.batch_size)
 
         # Compute current Q values

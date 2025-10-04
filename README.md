@@ -4,10 +4,10 @@
 
 <div align="center">
 
-![License](https://img.shields.io/github/license/AntonisZks/Reinforcement-Learning-Assignment.svg)
-![Repository Size](https://img.shields.io/github/repo-size/AntonisZks/Reinforcement-Learning-Assignment.svg)
-![Release](https://img.shields.io/github/v/release/AntonisZks/Reinforcement-Learning-Assignment.svg)
-![Contributors](https://img.shields.io/github/contributors/AntonisZks/Reinforcement-Learning-Assignment.svg)
+![License](https://img.shields.io/github/license/AntonisZks/CartPole-Optimization-with-Reinforcement-Learning.svg)
+![Repository Size](https://img.shields.io/github/repo-size/AntonisZks/CartPole-Optimization-with-Reinforcement-Learning.svg)
+![Release](https://img.shields.io/github/v/release/AntonisZks/CartPole-Optimization-with-Reinforcement-Learning.svg)
+![Contributors](https://img.shields.io/github/contributors/AntonisZks/CartPole-Optimization-with-Reinforcement-Learning.svg)
 	
 </div>
 
